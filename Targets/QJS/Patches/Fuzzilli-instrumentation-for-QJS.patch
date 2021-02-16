@@ -2,6 +2,24 @@ diff --git a/Makefile b/Makefile
 index 94c8e31..ba761db 100644
 --- a/Makefile
 +++ b/Makefile
+@@ -28,7 +28,7 @@ endif
+ # Windows cross compilation from Linux
+ #CONFIG_WIN32=y
+ # use link time optimization (smaller and faster executables but slower build)
+-CONFIG_LTO=y
++#CONFIG_LTO=y
+ # consider warnings as errors (for development)
+ #CONFIG_WERROR=y
+ # force 32 bit build for some utilities
+@@ -46,7 +46,7 @@ prefix=/usr/local
+ # use the gprof profiler
+ #CONFIG_PROFILE=y
+ # use address sanitizer
+-#CONFIG_ASAN=y
++CONFIG_ASAN=y
+ # include the code for BigInt/BigFloat/BigDecimal and math mode
+ CONFIG_BIGNUM=y
+ 
 @@ -70,6 +70,7 @@ ifdef CONFIG_CLANG
    CFLAGS += -Wunused -Wno-unused-parameter
    CFLAGS += -Wwrite-strings
