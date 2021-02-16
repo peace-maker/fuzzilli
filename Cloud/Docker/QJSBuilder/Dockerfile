@@ -32,4 +32,4 @@ RUN for i in `ls Patches`; do patch -p1 < Patches/$i; done
 
 # Start building!
 ADD fuzzbuild.sh fuzzbuild.sh
-RUN ./fuzzbuild.sh
+CMD [ "./fuzzbuild.sh" ]

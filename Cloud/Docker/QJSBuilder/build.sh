@@ -15,7 +15,8 @@ docker build --build-arg rev=$REV -t qjs_builder .
 
 # Copy build products
 mkdir -p out
-docker create --name temp_container qjs_builder
+docker create --privileged --name temp_container qjs_builder
+docker start -a temp_container
 docker cp temp_container:/home/builder/quickjs/qjs out/qjs
 docker rm temp_container
 

@@ -2,15 +2,6 @@ diff --git a/Makefile b/Makefile
 index 94c8e31..ba761db 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -28,7 +28,7 @@ endif
- # Windows cross compilation from Linux
- #CONFIG_WIN32=y
- # use link time optimization (smaller and faster executables but slower build)
--CONFIG_LTO=y
-+#CONFIG_LTO=y
- # consider warnings as errors (for development)
- #CONFIG_WERROR=y
- # force 32 bit build for some utilities
 @@ -46,7 +46,7 @@ prefix=/usr/local
  # use the gprof profiler
  #CONFIG_PROFILE=y
@@ -28,15 +19,22 @@ index 94c8e31..ba761db 100644
    CFLAGS += -MMD -MF $(OBJDIR)/$(@F).d
    ifdef CONFIG_DEFAULT_AR
      AR=$(CROSS_PREFIX)ar
-@@ -108,7 +109,7 @@ CFLAGS_DEBUG=$(CFLAGS) -O0
+@@ -108,11 +109,11 @@ CFLAGS_DEBUG=$(CFLAGS) -O0
  CFLAGS_SMALL=$(CFLAGS) -Os
  CFLAGS_OPT=$(CFLAGS) -O2
  CFLAGS_NOLTO:=$(CFLAGS_OPT)
 -LDFLAGS=-g
-+LDFLAGS=-g -fsanitize-coverage=trace-pc-guard
++LDFLAGS=-g -fsanitize-coverage=trace-pc-guard -fuse-ld=gold
  ifdef CONFIG_LTO
- CFLAGS_SMALL+=-flto
- CFLAGS_OPT+=-flto
+-CFLAGS_SMALL+=-flto
+-CFLAGS_OPT+=-flto
+-LDFLAGS+=-flto
++CFLAGS_SMALL+=-flto=thin
++CFLAGS_OPT+=-flto=thin
++LDFLAGS+=-flto=thin
+ endif
+ ifdef CONFIG_PROFILE
+ CFLAGS+=-p
 diff --git a/qjs.c b/qjs.c
 index 7e4839f..7dbf2b6 100644
 --- a/qjs.c
